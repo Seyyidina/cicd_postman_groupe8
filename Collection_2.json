@@ -51,9 +51,9 @@
           }
         },
         "url": {
-          "raw": "{{url3}}/public/employees",
+          "raw": "{{url}}/public/employees",
           "host": [
-            "{{url3}}"
+            "{{url}}"
           ],
           "path": [
             "public",

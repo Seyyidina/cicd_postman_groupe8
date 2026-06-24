@@ -7,8 +7,7 @@ pipeline {
         }  
     }
     parameters {
-        choice(name: 'collection_choisie', choices: ['collection', 'Collection_1', 'Collection_2'], description: 'Collection à lancer')
-        choice(name: 'Environnements', choices: ['Env_1', 'Env2'], description: 'Choix des environnements')
+        choice(name: 'Environnements', choices: ['Env_1', 'Env2', 'Env3'], description: 'Choix des environnements')
         booleanParam(name: 'select_tout', defaultValue: true, description: 'Lancer tout')
         booleanParam(name: 'selection', defaultValue: true, description: 'Lancer selon le choix')
     }
@@ -19,8 +18,9 @@ pipeline {
                 script {
                     if (params.select_tout) {
                         sh 'newman run collection.json'
-                        sh 'newman run collection_1.json -e Env_1.json'
-                        sh 'newman run collection_2.json -e Env2.json'
+                        sh 'newman run Collection_1.json -e ./Environment/Env_1.json'
+                        sh 'newman run Collection_1.json -e ./Environment/Env2.json'
+                        sh 'newman run Collection_2.json -e ./Environment/Env3.json'
                     }
                     else {
                         if (params.selection) {
@@ -28,14 +28,12 @@ pipeline {
                         }
                         else {
                             switch (params.Environnements) {
-                                case 'Env_1':
-                                    sh 'newman run Collection_1.json -e Env_1.json'
+                                case 'Env3':
+                                    sh 'newman run Collection_2.json -e ${params.Environnements}.json'
                                     break;
-                                case 'Env2':
-                                    sh 'newman run Collection_2.json -e Env2.json'
-                                    break;
+                                // Env1 et Env2
                                 default:
-                                    sh 'newman run collection.json'
+                                    sh 'newman run Collection_1.json -e ${params.Environnements}.json'
                                     break;                                                                   
                             }
                         }

@@ -42,9 +42,9 @@
           "raw": ""
         },
         "url": {
-          "raw": "{{url1}}/public/employees",
+          "raw": "{{url}}/public/employees",
           "host": [
-            "{{url1}}"
+            "{{url}}"
           ],
           "path": [
             "public",
