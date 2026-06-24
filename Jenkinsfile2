@@ -1,0 +1,30 @@
+pipeline {
+    agent {
+        docker
+        { 
+            image 'postman/newman:latest'
+            args '-u=root --entrypoint='
+        }  
+    }
+    parameters {
+        choice(name: 'Environnements', choices: ['Env1', 'Env2'], description: 'Choix des environnements')
+        booleanParam(name: 'is_all_env', defaultValue: false, description: 'Lancer la collection avec tous les env')
+    }
+    stages {
+        stage('Lancer le test') {
+            steps {
+                script {
+                    if (params.is_all_env) {
+                        sh 'newman run Collection_1.json -e ./Environment/Env1.json'
+                        sh 'newman run Collection_1.json -e ./Environment/Env2.json'
+                    }
+                    else {
+                        sh 'newman run Collection_1.json -e ./Environment/' + params.Environnements + '.json'
+                    }
+                }
+                echo ' -----Test Collection 2 passé--------'
+                build job: 'job3_postman'
+            }
+        }
+    }
+}

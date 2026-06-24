@@ -1,0 +1,19 @@
+pipeline {
+    agent {
+        docker
+        {
+            image 'postman/newman:latest'
+            args '-u=root --entrypoint='
+        }
+    }
+
+    stages {
+        stage('lancer le test') {
+            steps {
+                sh 'newman run collection.json'
+                echo ' -----Test Collection 1 passé--------'
+                build job: 'job2_postman'
+            }
+        }
+    }
+}
