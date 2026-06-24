@@ -29,11 +29,11 @@ pipeline {
                         else {
                             switch (params.Environnements) {
                                 case 'Env3':
-                                    sh 'newman run Collection_2.json -e ' + params.Environnements + '.json'
+                                    sh 'newman run Collection_2.json -e ./Environment/' + params.Environnements + '.json'
                                     break;
                                 // Env1 et Env2
                                 default:
-                                    sh 'newman run Collection_1.json -e ' + params.Environnements + '.json'
+                                    sh 'newman run Collection_1.json -e ./Environment/' + params.Environnements + '.json'
                                     break;                                                                   
                             }
                         }
